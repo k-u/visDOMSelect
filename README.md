@@ -17,7 +17,7 @@ Visually select to filter and iterate over a collection of DOM elements.
     });
 
 ![toggle checkboxes example](checkboxToggle.gif?raw=true)  
-[Demo](https://k-u.github.io/visDOMSelect/checkboxToggle)
+[Demo](https://k-u.github.io/visDOMSelect/examples/checkboxToggle)
 
 ### Build an array of elements in a selection matching specified CSS selectors
 
@@ -28,7 +28,7 @@ Visually select to filter and iterate over a collection of DOM elements.
     });
 
 ## Why?
-This originally came about to quickly fill out certain sites' privacy and email notification settings.  `visDOMSelect` is useful when you can enclose you want in a box, and where it is tricky to write a selector.
+This originally came about to quickly fill out certain sites' privacy and email notification settings.  `visDOMSelect` is useful when you can enclose elements you want in a box, and where it is tricky to write a selector.
 
 ## Code Style Guidelines
 [Airbnb has some guidelines for writing more readable javascript here](https://github.com/airbnb/javascript).  Code should pass `jscs --preset airbnb`.
