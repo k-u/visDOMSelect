@@ -4,38 +4,14 @@ Element.prototype.visDOMSelect = function(elems, f) {
   var _this = this;
 
   function mousemove(e) {
-    m.x = e.pageX; m.y = e.pageY;
-
-    if (element !== null) {
-      element.style.width  = Math.abs(m.x - m.x0) + 'px';
-      element.style.height = Math.abs(m.y - m.y0) + 'px';
-      element.style.left   = Math.min(m.x, m.x0) + 'px';
-      element.style.top    = Math.min(m.y, m.y0) + 'px';
-    }
+    m.x0 = e.pageX; m.y0 = e.pageY;
+    element.style.width  = Math.abs(m.x - m.x0) + 'px';
+    element.style.height = Math.abs(m.y - m.y0) + 'px';
+    element.style.left   = Math.min(m.x, m.x0) + 'px';
+    element.style.top    = Math.min(m.y, m.y0) + 'px';
   }
 
-  function click() {
-    if (element !== null) {
-      secondClick();
-    } else if (m.x > 0 && m.y > 0) {
-      firstClick();
-    }
-  }
-
-  function firstClick() {
-    m.x0 = m.x; m.y0 = m.y;
-    element = document.createElement('div');
-    element.style.position = 'absolute';
-    element.style.border = '1px solid pink';
-    element.style.background = 'rgba(255, 192, 203, 0.25)';
-    element.style.zIndex = 555;
-    element.style.left = m.x + 'px';
-    element.style.top = m.y + 'px';
-    _this.appendChild(element);
-    _this.style.cursor = 'crosshair';
-  }
-
-  function secondClick() {
+  function mouseup() {
     var i;
     var b;
 
@@ -62,9 +38,26 @@ Element.prototype.visDOMSelect = function(elems, f) {
     element = null;
     _this.style.cursor = 'default';
     _this.removeEventListener('mousemove', mousemove);
-    _this.removeEventListener('click', click);
+    _this.removeEventListener('mouseup', mouseup);
   }
 
-  this.addEventListener('mousemove', mousemove);
-  this.addEventListener('click', click);
+  function mousedown(e) {
+    // Temporarily disable text selection by disabling the default event.
+    e.preventDefault();
+    m.x = e.pageX; m.y = e.pageY;
+    element = document.createElement('div');
+    element.style.position = 'absolute';
+    element.style.border = '1px solid pink';
+    element.style.background = 'rgba(255, 192, 203, 0.25)';
+    element.style.zIndex = 555;
+    element.style.left = m.x + 'px';
+    element.style.top = m.y + 'px';
+    _this.appendChild(element);
+    _this.style.cursor = 'crosshair';
+    _this.addEventListener('mousemove', mousemove);
+    _this.addEventListener('mouseup', mouseup);
+    _this.removeEventListener('mousedown', mousedown);
+  }
+
+  this.addEventListener('mousedown', mousedown);
 };
