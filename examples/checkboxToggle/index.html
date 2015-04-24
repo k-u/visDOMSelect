@@ -20,7 +20,7 @@
     </style>
   </head>
   <body>
-    <a href='javascript:(function(f){var g=document.documentElement,h=document.getElementsByTagName("input");function k(c){a.x=c.pageX;a.y=c.pageY;null!==b&&(b.style.width=Math.abs(a.x-a.a)+"px",b.style.height=Math.abs(a.y-a.b)+"px",b.style.left=Math.min(a.x,a.a)+"px",b.style.top=Math.min(a.y,a.b)+"px")}function l(){if(null!==b){var d,e;a.x<a.a&&(a.x=a.a+(a.a=a.x,0));a.y<a.b&&(a.y=a.b+(a.b=a.y,0));for(d=0;d<h.length;d++)(e=h[d].getBoundingClientRect())&&a.a<=e.right+(window.pageXOffset||c.scrollLeft)&&a.x>=e.left+(window.pageXOffset||c.scrollLeft)&&a.b<=e.bottom+(window.pageYOffset||c.scrollTop)&&a.y>=e.top+(window.pageYOffset||c.scrollTop)&&f(h[d]);b.parentElement.removeChild(b);b=null;c.style.cursor="default";c.removeEventListener("mousemove",k);c.removeEventListener("click",l)}else 0<a.x&&0<a.y&&(a.a=a.x,a.b=a.y,b=document.createElement("div"),b.style.position="absolute",b.style.border="1px solid pink",b.style.background="rgba(255, 192, 203, 0.25)",b.style.zIndex=555,b.style.left=a.x+"px",b.style.top=a.y+"px",c.appendChild(b),c.style.cursor="crosshair")}var a={x:-1,y:-1},b=null,c=g;g.addEventListener("mousemove",k);g.addEventListener("click",l)})(function(f){f.checked^=1});'>select &amp; toggle checkboxes</a>
+    <p id="bookmarklet"></p>
     <p>
       Generate 
       <input id="w" type="number" min="1" max="8192" value="24"> 
@@ -30,5 +30,22 @@
     </p>
     <div id="table"></div>
     <script src="main.js"></script>
+    <script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'checkboxToggle.min.js', true);
+    xhr.send();
+    xhr.onload = function() {
+      if ((xhr.status >= 200 && xhr.status < 300)
+      || xhr.status === 304 
+      || window.location.protocol === 'file:') {
+        var b = document.getElementById('bookmarklet');
+        var a = document.createElement('a');
+        a.href = 'javascript:' + xhr.responseText;
+        a.textContent = 'select & toggle checkboxes';
+        b.appendChild(a);
+        b.insertAdjacentHTML('beforeend', ' ← click then drag to make a selection');
+      }
+    };
+    </script>
   </body>
 </html>
